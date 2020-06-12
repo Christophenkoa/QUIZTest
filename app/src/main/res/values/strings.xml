@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">QuizGame</string>
+    <string name="question">Question?</string>
+    <string name="answer1">ANSWER1</string>
+    <string name="answer2">ANSWER2</string>
+    <string name="answer3">ANSWER3</string>
+    <string name="answer4">ANSWER4</string>
+    <string name="asking_name">Welcome! What is your name?</string>
+    <string name="user_name">Please type your name</string>
+    <string name="play_game">LET\'S PLAY</string>
 </resources>

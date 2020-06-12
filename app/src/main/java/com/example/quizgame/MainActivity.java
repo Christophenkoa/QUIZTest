@@ -2,6 +2,7 @@ package com.example.quizgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this , GameActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -48,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mButton.setEnabled(s.toString().length() !=0);
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                mButton.setEnabled(s.toString().length() !=0);
             }
 
             @Override
