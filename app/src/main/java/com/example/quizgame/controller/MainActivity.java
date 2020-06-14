@@ -1,4 +1,4 @@
-package com.example.quizgame;
+package com.example.quizgame.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,19 +11,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.quizgame.R;
+import com.example.quizgame.model.User;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextView;
-    private EditText mEditText;
+    private EditText mNameInput;
     private Button mButton;
+    private User mUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mUser = new User();
+
         mTextView = findViewById(R.id.textView);
-        mEditText = findViewById(R.id.textInputEditText);
+        mNameInput = findViewById(R.id.textInputEditText);
         mButton = findViewById(R.id.button);
 
         mButton.setEnabled(false);
@@ -39,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String firstName = mNameInput.getText().toString();
+                mUser.setFirstName(firstName);
                 Intent intent = new Intent(MainActivity.this , GameActivity.class);
                 startActivity(intent);
             }
@@ -47,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void enterPlayerName() {
-        mEditText.addTextChangedListener(new TextWatcher() {
+        mNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
