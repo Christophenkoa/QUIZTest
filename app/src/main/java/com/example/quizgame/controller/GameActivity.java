@@ -1,7 +1,9 @@
 package com.example.quizgame.controller;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mAnswer1;
     private Button mAnswer2;
     private Button mAnswer4;
+    private int mScore;
+    private int mNumberOfQuestion;
 
     private QuestionBank mQuestionBank;
     private Question mCurrentQuestion;
@@ -31,6 +35,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
 
         mQuestionBank = this.generateQuestions();
+
+        mScore = 0;
+        mNumberOfQuestion = 4;
 
         mQuestion = (TextView) findViewById(R.id.textView2);
         mAnswer1  = (Button) findViewById(R.id.button1);
@@ -60,14 +67,39 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(responseIndex == mCurrentQuestion.getAnswerIndex()) {
             //Good Answer
             Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show();
+            mScore++;
 
         }else {
             //Wrong answer
             Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show();
         }
+
+        if(--mNumberOfQuestion == 0) {
+            //finish
+            endGame();
+        }else {
+            mCurrentQuestion = mQuestionBank.getQuestion();
+            displayQuestion(mCurrentQuestion);
+        }
     }
 
-     private void displayQuestion(final Question question) {
+    private void endGame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Well done")
+                .setMessage("Your score is "+mScore)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //end activity
+                        finish();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void displayQuestion(final Question question) {
          mQuestion.setText(question.getQuestion());
          mAnswer1.setText(question.getChoiceList().get(0));
          mAnswer2.setText(question.getChoiceList().get(1));
@@ -81,7 +113,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 2);
         Question question2 = new Question("How many countries are there in Africa?",
                 Arrays.asList("54" , "33" , "39" , "45"),
-                1);
+                0);
         Question question3 = new Question("Who is the creator of android os?",
                 Arrays.asList("Andy Rubin" , "Steve Job" , "Bill Gate" , "Paul Smith"),
                 0);
